@@ -64,30 +64,44 @@ function splitElement(el, chars) {
     while (walker.nextNode()) textNodes.push(walker.currentNode);
 
     textNodes.forEach((textNode) => {
-        if (!textNode.textContent.trim()) return;
+        const text = textNode.textContent;
+        if (!text.trim()) return;
 
         const frag = document.createDocumentFragment();
-        const text = textNode.textContent;
         const batch = [];
 
-        for (let i = 0; i < text.length; i++) {
-            const ch = text[i];
-            if (/\s/.test(ch)) {
-                frag.appendChild(document.createTextNode(ch));
-                continue;
+        // Split by whitespace, capturing the whitespace
+        const parts = text.split(/(\s+)/);
+
+        parts.forEach((part) => {
+            if (!part) return;
+
+            // 1. Whitespace → append as text node (allows wrapping between words)
+            if (/^\s+$/.test(part)) {
+                frag.appendChild(document.createTextNode(part));
+                return;
             }
 
-            const span = document.createElement("span");
-            span.className = "lw-glow-char";
-            span.textContent = ch;
-            span.style.transition = TRANSITION_FAST;
-            span.style.display = "inline-block";
-            frag.appendChild(span);
+            // 2. Word → wrap in nowrap span to prevent mid-word breaks
+            const wordWrapper = document.createElement("span");
+            wordWrapper.style.display = "inline-block";
+            wordWrapper.style.whiteSpace = "nowrap";
 
-            const charObj = { el: span, original: ch, scrambleId: 0, fontSize };
-            chars.push(charObj);
-            batch.push(charObj);
-        }
+            for (let i = 0; i < part.length; i++) {
+                const ch = part[i];
+                const span = document.createElement("span");
+                span.className = "lw-glow-char";
+                span.textContent = ch;
+                span.style.transition = TRANSITION_FAST;
+                span.style.display = "inline-block";
+                wordWrapper.appendChild(span);
+
+                const charObj = { el: span, original: ch, scrambleId: 0, fontSize };
+                chars.push(charObj);
+                batch.push(charObj);
+            }
+            frag.appendChild(wordWrapper);
+        });
 
         textNode.parentNode.replaceChild(frag, textNode);
 
