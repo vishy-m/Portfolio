@@ -1,0 +1,19 @@
+{
+  "name": "vishruth-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4173",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.20",
+    "three": "^0.176.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.11"
+  }
+}

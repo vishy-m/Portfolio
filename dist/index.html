@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vishruth Meda — Interactive Engineer</title>
+  <meta name="description"
+    content="Portfolio of Vishruth Meda. Precision engineering meets AI, game development, and interactive experiences." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Cormorant+Garamond:ital,wght@1,600&display=swap"
+    rel="stylesheet" />
+  <script type="module" crossorigin src="/assets/main-BUt6ASEl.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/lenis-DD0kB4Ju.js">
+  <link rel="stylesheet" crossorigin href="/assets/lenis-cn2BS04_.css">
+  <link rel="stylesheet" crossorigin href="/assets/main-DM8LHvjP.css">
+</head>
+
+<body class="lw-theme">
+
+  <!-- Noise Overlay -->
+  <div class="lw-noise" aria-hidden="true"></div>
+
+  <!-- Custom Cursor -->
+  <div class="lw-cursor-shell" aria-hidden="true">
+    <div class="lw-cursor-ring"></div>
+    <div class="lw-cursor-dot"></div>
+  </div>
+
+  <!-- Scroll Markers -->
+  <div class="lw-scroll-marker">
+    <div class="lw-marker-item active" data-target="#hero">01</div>
+    <div class="lw-marker-item" data-target="#projects">02</div>
+    <div class="lw-marker-item" data-target="#about">03</div>
+    <div class="lw-marker-item" data-target="#contact">04</div>
+  </div>
+
+  <!-- Navigation -->
+  <header id="site-nav"
+    style="position: fixed; top: 0; left: 0; width: 100%; padding: 2rem 3rem; z-index: 100; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: difference; color: white;">
+    <a href="#hero"
+      style="font-family: var(--font-script); font-size: 1.6rem; font-style: italic; text-decoration: none; color: inherit;">Vishruth
+      Meda</a>
+    <nav
+      style="display: flex; gap: 2.5rem; font-family: var(--font-tech); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.12em;">
+      <a href="#projects" class="lw-nav-link"
+        style="color: inherit; text-decoration: none; opacity: 0.7; transition: opacity 0.3s;">Work</a>
+      <a href="#about" class="lw-nav-link"
+        style="color: inherit; text-decoration: none; opacity: 0.7; transition: opacity 0.3s;">About</a>
+      <a href="#contact" class="lw-nav-link"
+        style="color: inherit; text-decoration: none; opacity: 0.7; transition: opacity 0.3s;">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ========== HERO SECTION (Dark) ========== -->
+    <section id="hero" class="lw-hero-scene">
+      <div class="lw-hero-content lw-container" style="text-align: center;">
+        <p class="lw-text-eyebrow lw-reveal">Interactive Engineer</p>
+        <h1 class="lw-heading-hero lw-reveal">
+          Vishruth<br />Meda
+        </h1>
+        <div class="lw-hud-line lw-reveal"></div>
+        <div class="lw-hud-row lw-reveal">
+          <span id="hud-location">Loc: Frisco, TX</span>
+          <span>Role: Full Stack / AI</span>
+          <span>Status: Building</span>
+        </div>
+        <a href="#projects" class="lw-btn lw-reveal"><span>View Selected Works</span></a>
+      </div>
+    </section>
+
+    <!-- ========== PROJECTS SECTION (Dark) ========== -->
+    <section id="projects" class="lw-section-dark" style="padding: var(--lw-section-padding);">
+      <div class="lw-container">
+        <p class="lw-text-eyebrow lw-reveal">02 — Selected Work</p>
+        <h2 class="lw-heading-section lw-reveal">Projects</h2>
+        <div class="lw-grid-3" id="projects-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT / EXPERIENCE SECTION (Dark) ========== -->
+    <section id="about" class="lw-section-dark" style="padding: var(--lw-section-padding);">
+      <div class="lw-container">
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 4rem;">
+          <div>
+            <p class="lw-text-eyebrow lw-reveal">03 — Profile</p>
+            <h2 class="lw-heading-section lw-reveal">About</h2>
+            <p class="lw-text-body lw-reveal" id="about-bio">
+              Building at the intersection of AI and interactive systems. I focus on usable products, measurable
+              performance, and strong team execution.
+            </p>
+            <div style="margin-top: 4rem;" class="lw-reveal">
+              <p class="lw-text-eyebrow">Skills</p>
+              <div id="skills-cloud" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;"></div>
+            </div>
+          </div>
+
+          <div>
+            <p class="lw-text-eyebrow lw-reveal">Experience</p>
+            <div id="experience-list" style="display: flex; flex-direction: column; gap: 0; margin-top: 2rem;">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION (Dark) ========== -->
+    <section id="contact" class="lw-section-dark" style="padding: var(--lw-section-padding); text-align: center;">
+      <div class="lw-container">
+        <p class="lw-text-eyebrow lw-reveal">04 — Get in Touch</p>
+        <h2 class="lw-heading-section lw-reveal" style="font-size: clamp(3rem, 8vw, 7rem);">Let's Build<br />Something
+        </h2>
+        <p class="lw-text-body lw-reveal" style="margin: 2rem auto; text-align: center;">
+          Reach out for engineering collaborations, AI projects, or startup work.
+        </p>
+        <div class="lw-reveal" style="display: flex; gap: 1.5rem; justify-content: center; margin-top: 3rem;">
+          <a id="email-cta" href="#" class="lw-btn"><span>Email Me</span></a>
+          <a href="https://www.linkedin.com/in/vishruth-meda" target="_blank" class="lw-btn"
+            style="border-color: rgba(255,255,255,0.2);"><span>LinkedIn</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="lw-footer">
+      <div class="lw-container"
+        style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 2rem;">
+        <div>
+          <div style="font-family: var(--font-script); font-size: 2.5rem; font-style: italic;">VM</div>
+          <p style="opacity: 0.3; margin-top: 0.5rem; font-size: 0.8rem;">© 2026 Vishruth Meda. All rights reserved.</p>
+        </div>
+        <div style="display: flex; gap: 2rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;">
+          <a href="https://github.com/vishruth-meda" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/vishruth-meda" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+</body>
+
+</html>

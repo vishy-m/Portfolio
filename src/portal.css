@@ -1,0 +1,80 @@
+#portal-transition {
+  --portal-scale: 0;
+  --portal-accent: rgba(201, 162, 75, 0.8);
+  --portal-accent-soft: rgba(143, 106, 51, 0.6);
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+#portal-transition .portal-veil,
+#portal-transition .portal-core {
+  position: absolute;
+  inset: 0;
+}
+
+#portal-transition .portal-veil {
+  background: rgba(10, 12, 18, 0.86);
+}
+
+#portal-transition .portal-core {
+  background:
+    radial-gradient(
+      34rem 34rem at 50% 50%,
+      var(--portal-accent),
+      var(--portal-accent-soft) 44%,
+      transparent 70%
+    ),
+    radial-gradient(16rem 16rem at 50% 50%, rgba(246, 239, 226, 0.35), transparent 72%);
+  transform: scale(var(--portal-scale));
+  transform-origin: center;
+  filter: blur(2px);
+}
+
+#portal-transition .portal-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display, "Space Grotesk", "Segoe UI", sans-serif);
+  color: rgba(246, 239, 226, 0.92);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: clamp(0.76rem, 1.6vw, 1rem);
+  opacity: 0;
+}
+
+#portal-transition.is-active,
+#portal-transition.is-entering {
+  opacity: 1;
+  visibility: visible;
+}
+
+#portal-transition[data-theme="ledger"] {
+  --portal-accent: rgba(201, 162, 75, 0.84);
+  --portal-accent-soft: rgba(53, 70, 63, 0.64);
+}
+
+#portal-transition[data-theme="forge"] {
+  --portal-accent: rgba(143, 106, 51, 0.82);
+  --portal-accent-soft: rgba(53, 70, 63, 0.56);
+}
+
+#portal-transition[data-theme="signal"] {
+  --portal-accent: rgba(201, 162, 75, 0.86);
+  --portal-accent-soft: rgba(143, 106, 51, 0.72);
+}
+
+#portal-transition[data-theme="citadel"] {
+  --portal-accent: rgba(143, 106, 51, 0.84);
+  --portal-accent-soft: rgba(21, 25, 35, 0.8);
+}
+
+#portal-transition[data-theme="home"] {
+  --portal-accent: rgba(246, 239, 226, 0.72);
+  --portal-accent-soft: rgba(53, 70, 63, 0.52);
+}
