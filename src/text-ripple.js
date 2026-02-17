@@ -226,7 +226,7 @@ function startAmbientGlow(chars, getMouse) {
 export function setupTextRipple() {
     if (prefersReducedMotion || !finePointer) return;
 
-    const textRoot = document.getElementById("main-content");
+    const textRoot = document.getElementById("main-content") || document.querySelector(".project-layout");
     if (!textRoot) return;
 
     // Split all visible text into individually addressable characters

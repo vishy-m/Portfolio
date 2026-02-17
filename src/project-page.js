@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { getProjectNeighbors, getProjectRealm } from "./data/project-realms";
 import { setupPortalNavigation } from "./portal-nav";
+import { setupTextRipple } from "./text-ripple";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -573,6 +574,7 @@ async function boot() {
   setProjectContent(project);
   initSmoothScroll();
   setupPageAnimations(project);
+  setupTextRipple();
   ScrollTrigger.refresh();
 }
 
