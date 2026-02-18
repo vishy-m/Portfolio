@@ -1,12 +1,11 @@
 import "./project.css";
 import "./lightweight.css";
-import "./portal.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { getProjectNeighbors, getProjectRealm } from "./data/project-realms";
-import { setupPortalNavigation } from "./portal-nav";
 import { setupTextRipple } from "./text-ripple";
+import { setupPageTransitions } from "./page-transition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -145,22 +144,14 @@ function setProjectContent(project) {
   const homeLink = document.querySelector(".project-back");
 
   prevLink.href = previous.path;
-  prevLink.dataset.portalTheme = previous.theme;
-  prevLink.dataset.portalLabel = previous.projectTag;
   prevLink.querySelector("strong").textContent = previous.title;
 
   nextLink.href = next.path;
-  nextLink.dataset.portalTheme = next.theme;
-  nextLink.dataset.portalLabel = next.projectTag;
   nextLink.querySelector("strong").textContent = next.title;
 
   jumpLink.href = "/index.html#projects";
-  jumpLink.dataset.portalTheme = "home";
-  jumpLink.dataset.portalLabel = "Portfolio";
 
   homeLink.href = "/index.html#projects";
-  homeLink.dataset.portalTheme = "home";
-  homeLink.dataset.portalLabel = "Portfolio";
 }
 
 function initSmoothScroll() {
@@ -661,11 +652,12 @@ async function boot() {
   const projectId = document.body.dataset.projectId || "finance-wizard";
   const project = getProjectRealm(projectId);
 
-  setupPortalNavigation();
+
   setProjectContent(project);
   initSmoothScroll();
   setupPageAnimations(project);
   setupTextRipple();
+  setupPageTransitions();
   ScrollTrigger.refresh();
 }
 
