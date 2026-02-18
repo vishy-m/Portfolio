@@ -1,0 +1,29 @@
+Title:
+Enemy AI Behavioral System
+
+Description:
+A gameplay intelligence stack for Unreal Engine that combines sensory logic, behavior trees, and adaptive reaction loops.
+
+Project Metrics:
+
+ - Engine:
+	UE5
+ - Core:
+	Behavior Trees
+ - Outcome:
+	Adaptive Combat
+
+Body 1: <Title: Sensory Architecture>
+Modeled sensory channels for line-of-sight, aggression triggers, and retreat logic. Enemies perceive the environment through layered awareness systems that respond to sound, visibility, and threat proximity.
+
+Body 2: <Title: Behavior Tree Design>
+Implemented behavior tree branches to make enemy intent more legible to players. Each decision node evaluates context — health, ammo, player distance — creating emergent tactical choices.
+
+Body 3: <Title: Tuning & Balancing>
+Tested tuning profiles for pacing, pressure curves, and difficulty fairness. Iterative playtesting sessions refined the balance between challenge and frustration.
+
+Tools used:
+UE5, C++, Blueprints, Behavior Trees, AI Agents
+
+Models:
+

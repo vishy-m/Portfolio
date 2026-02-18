@@ -1,0 +1,29 @@
+Title:
+ASL Gesture Translator
+
+Description:
+A webcam-to-language pipeline that translates hand landmarks into alphabet and phrase predictions using an MLP model.
+
+Project Metrics:
+
+ - Accuracy:
+	97%
+ - Rank:
+	Top 15
+ - Input:
+	Webcam Landmarks
+
+Body 1: <Title: Data Pipeline>
+Built a robust data collection and cleaning pipeline from live camera landmarks. MediaPipe extracts 21 hand keypoints per frame, feeding into a normalization layer that handles varying hand sizes and positions.
+
+Body 2: <Title: Model Training>
+Trained and evaluated MLP variants for recognition confidence and latency tradeoffs. The final architecture balances real-time inference speed with high accuracy across 26 ASL alphabet signs.
+
+Body 3: <Title: Interaction Design>
+Packaged inference outputs into a practical interaction loop for communication support. The system provides visual feedback, confidence indicators, and word-building capabilities.
+
+Tools used:
+Python, OpenCV, MediaPipe, MLP, Data Pipeline
+
+Models:
+

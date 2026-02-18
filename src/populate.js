@@ -21,8 +21,9 @@ export function populateProjects() {
     const grid = document.getElementById("projects-grid");
     if (!grid) return;
 
-    resumeData.projects.forEach((project, i) => {
-        const realm = projectRealms[projectRealmOrder[i]];
+    projectRealmOrder.forEach((id, i) => {
+        const realm = projectRealms[id];
+        if (!realm) return;
 
         const card = document.createElement("article");
         card.className = "lw-project-card lw-reveal";
@@ -42,22 +43,22 @@ export function populateProjects() {
         // Content
         const title = document.createElement("h3");
         title.className = "lw-card-title";
-        title.textContent = project.name;
+        title.textContent = realm.title;
 
         const desc = document.createElement("p");
         desc.className = "lw-card-desc";
-        desc.textContent = project.summary;
+        desc.textContent = realm.subtitle;
 
         const link = document.createElement("a");
         link.className = "lw-card-link";
         link.textContent = "View Project →";
-        link.href = realm ? realm.path : "#";
+        link.href = realm.path;
 
         card.append(visual, title, desc, link);
 
         card.addEventListener("click", (e) => {
             if (e.target.tagName === "A") return;
-            if (realm) window.location.href = realm.path;
+            window.location.href = realm.path;
         });
 
         grid.appendChild(card);

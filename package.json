@@ -4,8 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 4173",
-    "build": "vite build",
+    "projects": "node scripts/build-projects.js",
+    "dev": "node scripts/build-projects.js && vite --host 127.0.0.1 --port 4173",
+    "build": "node scripts/build-projects.js && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4173"
   },
   "dependencies": {

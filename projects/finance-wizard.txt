@@ -1,0 +1,29 @@
+Title:
+Finance Wizard Mobile Port
+
+Description:
+A native iOS migration focused on making financial literacy feel accessible, visual, and actionable for K-12 learners.
+
+Project Metrics:
+
+ - Audience:
+	K-12 Learners
+ - Platform:
+	iOS Native
+ - Focus:
+	Accessibility
+
+Body 1: <Title: Visual Learning Modules>
+Reframed financial education as short visual modules with reduced cognitive load. The app breaks down complex concepts like budgeting, saving, and investing into bite-sized interactive lessons that keep young learners engaged.
+
+Body 2: <Title: Component Architecture>
+Built reusable SwiftUI components for onboarding, progress, and scenario cards. Each component was designed to be composable and theme-aware, ensuring a consistent experience across different lesson types.
+
+Body 3: <Title: Backend Integration>
+Connected account flows and product iteration loops through Firebase-backed state. Real-time sync ensures progress is never lost, and analytics feed back into content decisions.
+
+Tools used:
+Swift, SwiftUI, Firebase, Git, Xcode
+
+Models:
+

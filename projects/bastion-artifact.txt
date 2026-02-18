@@ -1,0 +1,29 @@
+Title:
+Bastion of the Artifact
+
+Description:
+A team-led Unreal prototype with combat, AI, wave systems, and inventory mechanics built under Agile delivery cycles.
+
+Project Metrics:
+
+ - Team:
+	10 Developers
+ - Method:
+	Agile SDLC
+ - Result:
+	Playable Build
+
+Body 1: <Title: Sprint Planning>
+Led sprint planning and system ownership across combat, inventory, and wave flows. Each two-week sprint delivered tested features that integrated cleanly with adjacent systems.
+
+Body 2: <Title: Cross-Discipline Coordination>
+Coordinated cross-discipline handoffs between gameplay engineers and content creators. Clear interface contracts and shared documentation kept the 10-person team aligned.
+
+Body 3: <Title: Systems Integration>
+Delivered cohesive core loops with scalable architecture for future expansion. Combat, AI, inventory, and wave progression interlock through event-driven communication.
+
+Tools used:
+Unreal Engine, C++, Agile, Gameplay Systems, Enemy AI
+
+Models:
+

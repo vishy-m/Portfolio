@@ -32,21 +32,104 @@ function setProjectContent(project) {
   document.getElementById("project-kicker").textContent = project.projectTag;
   document.getElementById("project-title").textContent = project.title;
   document.getElementById("project-subtitle").textContent = project.subtitle;
-  document.getElementById("project-impact-note").textContent = project.impact;
+  document.getElementById("project-impact-note").textContent = project.impact || "";
 
+  // ── Metrics ──────────────────────────────────────────────────
   const metrics = document.getElementById("project-metrics");
-  project.metrics.forEach((item) => {
-    const card = el("article", "metric-card reveal");
-    card.append(el("p", "label", item.label), el("p", "value", item.value));
-    metrics.appendChild(card);
-  });
+  if (project.metrics && project.metrics.length > 0) {
+    project.metrics.forEach((item) => {
+      const card = el("article", "metric-card reveal");
+      card.append(el("p", "label", item.label), el("p", "value", item.value));
+      metrics.appendChild(card);
+    });
+  }
 
-  const chapters = document.getElementById("project-chapters");
-  project.chapters.forEach((entry) => chapters.appendChild(el("li", "reveal", entry)));
+  // ── Body sections ────────────────────────────────────────────
+  const bodyContainer = document.getElementById("project-body-container");
+  if (bodyContainer && project.bodies && project.bodies.length > 0) {
+    project.bodies.forEach((body) => {
+      const section = el("section", "project-section project-body-section");
+      const heading = el("h2", "reveal", body.title);
+      const paragraph = el("p", "project-body-text reveal", body.content);
+      section.append(heading, paragraph);
+      bodyContainer.appendChild(section);
+    });
+  }
 
+  // ── Stack / Tools ────────────────────────────────────────────
   const stack = document.getElementById("project-stack");
-  project.stack.forEach((item) => stack.appendChild(el("span", "stack-pill reveal", item)));
+  if (project.stack && project.stack.length > 0) {
+    project.stack.forEach((item) => stack.appendChild(el("span", "stack-pill reveal", item)));
+  }
 
+  // ── Media gallery (images + videos) ──────────────────────────
+  const mediaGallery = document.getElementById("project-media-gallery");
+  if (mediaGallery && project.assets) {
+    const { images, videos } = project.assets;
+    const hasMedia = (images && images.length > 0) || (videos && videos.length > 0);
+
+    if (hasMedia) {
+      const section = el("section", "project-section project-media-section");
+      section.appendChild(el("h2", "reveal", "Media"));
+      const grid = el("div", "media-grid");
+
+      if (images) {
+        images.forEach((imgFile) => {
+          const wrapper = el("div", "media-item reveal");
+          const img = document.createElement("img");
+          img.src = `/assets/${project.id}/${imgFile}`;
+          img.alt = `${project.title} — ${imgFile}`;
+          img.loading = "lazy";
+          wrapper.appendChild(img);
+          grid.appendChild(wrapper);
+        });
+      }
+
+      if (videos) {
+        videos.forEach((vidFile) => {
+          const wrapper = el("div", "media-item media-video reveal");
+          const video = document.createElement("video");
+          video.src = `/assets/${project.id}/${vidFile}`;
+          video.controls = true;
+          video.preload = "metadata";
+          video.playsInline = true;
+          wrapper.appendChild(video);
+          grid.appendChild(wrapper);
+        });
+      }
+
+      section.appendChild(grid);
+      mediaGallery.appendChild(section);
+    }
+  }
+
+  // ── External links ───────────────────────────────────────────
+  const linksContainer = document.getElementById("project-links-container");
+  if (linksContainer && project.assets && project.assets.links && project.assets.links.length > 0) {
+    const section = el("section", "project-section project-links-section");
+    section.appendChild(el("h2", "reveal", "Links"));
+    const linksList = el("div", "project-links-list");
+
+    project.assets.links.forEach((url) => {
+      const a = document.createElement("a");
+      a.href = url;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.className = "project-ext-link reveal";
+      // Display a clean hostname
+      try {
+        a.textContent = new URL(url).hostname.replace("www.", "") + " →";
+      } catch {
+        a.textContent = url;
+      }
+      linksList.appendChild(a);
+    });
+
+    section.appendChild(linksList);
+    linksContainer.appendChild(section);
+  }
+
+  // ── Navigation ───────────────────────────────────────────────
   const { previous, next } = getProjectNeighbors(project.id);
   const prevLink = document.getElementById("project-prev");
   const nextLink = document.getElementById("project-next");
