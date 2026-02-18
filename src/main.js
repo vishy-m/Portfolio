@@ -12,7 +12,6 @@ import { populateProjects, populateExperience, populateSkills, populateContact }
 import { initSmoothScroll, setupRevealAnimations, setupScrollMarkers, ScrollTrigger } from "./animations";
 import { setupTextRipple } from "./text-ripple";
 import { setupCustomCursor, setupMagneticButtons } from "./cursor";
-import { setupPageTransitions } from "./page-transition";
 
 // ── Bootstrap ────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCustomCursor();
   setupMagneticButtons();
   setupTextRipple();
-  setupPageTransitions();
 
   // 4. Refresh GSAP triggers after dynamic content
   ScrollTrigger.refresh();
