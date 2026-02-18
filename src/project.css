@@ -124,7 +124,6 @@ a {
    ==================================== */
 
 .project-hero {
-  min-height: 80vh;
   display: grid;
   align-content: center;
   gap: 1.5rem;
@@ -396,6 +395,33 @@ a {
 }
 
 /* ====================================
+   Inline Media (between body sections)
+   ==================================== */
+
+.project-media-inline {
+  border: 1px solid var(--line-soft);
+  background: rgba(10, 10, 10, 0.6);
+  overflow: hidden;
+}
+
+.project-media-inline .media-item {
+  border: none;
+}
+
+.project-media-remaining {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr));
+  padding: 1rem;
+  background: transparent;
+  border: none;
+}
+
+.project-media-remaining .media-item {
+  border: 1px solid var(--line-soft);
+}
+
+/* ====================================
    Dynamic containers — grid flow
    ==================================== */
 
@@ -420,30 +446,8 @@ a {
 
 @media (min-width: 1120px) {
   .project-shell {
-    grid-template-columns: 1fr 1.2fr;
+    max-width: 64rem;
     gap: 1.5rem;
-    align-items: start;
-  }
-
-  .project-topbar {
-    grid-column: 1 / -1;
-  }
-
-  .project-hero {
-    grid-column: 1;
-    position: sticky;
-    top: 6rem;
-    min-height: calc(100vh - 8rem);
-    align-content: start;
-    padding-top: 1rem;
-  }
-
-  .project-shell>.project-section {
-    grid-column: 2;
-  }
-
-  .project-shell>.project-section:last-child {
-    grid-column: 1 / -1;
   }
 }
 

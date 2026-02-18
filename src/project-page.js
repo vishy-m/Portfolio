@@ -44,35 +44,13 @@ function setProjectContent(project) {
     });
   }
 
-  // ── Body sections ────────────────────────────────────────────
+  // ── Body sections interleaved with media ──────────────────────
   const bodyContainer = document.getElementById("project-body-container");
-  if (bodyContainer && project.bodies && project.bodies.length > 0) {
-    project.bodies.forEach((body) => {
-      const section = el("section", "project-section project-body-section");
-      const heading = el("h2", "reveal", body.title);
-      const paragraph = el("p", "project-body-text reveal", body.content);
-      section.append(heading, paragraph);
-      bodyContainer.appendChild(section);
-    });
-  }
-
-  // ── Stack / Tools ────────────────────────────────────────────
-  const stack = document.getElementById("project-stack");
-  if (project.stack && project.stack.length > 0) {
-    project.stack.forEach((item) => stack.appendChild(el("span", "stack-pill reveal", item)));
-  }
-
-  // ── Media gallery (images + videos) ──────────────────────────
-  const mediaGallery = document.getElementById("project-media-gallery");
-  if (mediaGallery && project.assets) {
-    const { images, videos } = project.assets;
-    const hasMedia = (images && images.length > 0) || (videos && videos.length > 0);
-
-    if (hasMedia) {
-      const section = el("section", "project-section project-media-section");
-      section.appendChild(el("h2", "reveal", "Media"));
-      const grid = el("div", "media-grid");
-
+  if (bodyContainer) {
+    // Build a pool of all media elements
+    const mediaPool = [];
+    if (project.assets) {
+      const { images, videos } = project.assets;
       if (images) {
         images.forEach((imgFile) => {
           const wrapper = el("div", "media-item reveal");
@@ -81,10 +59,9 @@ function setProjectContent(project) {
           img.alt = `${project.title} — ${imgFile}`;
           img.loading = "lazy";
           wrapper.appendChild(img);
-          grid.appendChild(wrapper);
+          mediaPool.push(wrapper);
         });
       }
-
       if (videos) {
         videos.forEach((vidFile) => {
           const wrapper = el("div", "media-item media-video reveal");
@@ -94,13 +71,44 @@ function setProjectContent(project) {
           video.preload = "metadata";
           video.playsInline = true;
           wrapper.appendChild(video);
-          grid.appendChild(wrapper);
+          mediaPool.push(wrapper);
         });
       }
-
-      section.appendChild(grid);
-      mediaGallery.appendChild(section);
     }
+
+    let mediaIndex = 0;
+    const bodies = project.bodies || [];
+
+    bodies.forEach((body) => {
+      // Add body section
+      const section = el("section", "project-section project-body-section");
+      const heading = el("h2", "reveal", body.title);
+      const paragraph = el("p", "project-body-text reveal", body.content);
+      section.append(heading, paragraph);
+      bodyContainer.appendChild(section);
+
+      // Insert a media item after this body section (if available)
+      if (mediaIndex < mediaPool.length) {
+        const mediaSection = el("div", "project-media-inline");
+        mediaSection.appendChild(mediaPool[mediaIndex++]);
+        bodyContainer.appendChild(mediaSection);
+      }
+    });
+
+    // Append any remaining media items
+    if (mediaIndex < mediaPool.length) {
+      const remaining = el("div", "project-media-inline project-media-remaining");
+      while (mediaIndex < mediaPool.length) {
+        remaining.appendChild(mediaPool[mediaIndex++]);
+      }
+      bodyContainer.appendChild(remaining);
+    }
+  }
+
+  // ── Stack / Tools ────────────────────────────────────────────
+  const stack = document.getElementById("project-stack");
+  if (project.stack && project.stack.length > 0) {
+    project.stack.forEach((item) => stack.appendChild(el("span", "stack-pill reveal", item)));
   }
 
   // ── External links ───────────────────────────────────────────
