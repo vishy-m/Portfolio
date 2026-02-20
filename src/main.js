@@ -12,6 +12,7 @@ import { populateProjects, populateExperience, populateSkills, populateContact }
 import { initSmoothScroll, setupRevealAnimations, setupScrollMarkers, ScrollTrigger } from "./animations";
 import { setupTextRipple } from "./text-ripple";
 import { setupCustomCursor, setupMagneticButtons } from "./cursor";
+import { setupPageTransitions, revealAfterTransition } from "./page-transition";
 
 // ── Bootstrap ────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
@@ -30,7 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCustomCursor();
   setupMagneticButtons();
   setupTextRipple();
+  setupPageTransitions();
 
   // 4. Refresh GSAP triggers after dynamic content
   ScrollTrigger.refresh();
+
+  // 5. Reveal page (prevents FOUC) + play transition if arriving from another page
+  document.body.style.opacity = "1";
+  revealAfterTransition();
 });

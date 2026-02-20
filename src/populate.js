@@ -7,6 +7,7 @@
 
 import { resumeData } from "./data/resume";
 import { projectRealmOrder, projectRealms } from "./data/project-realms";
+import { navigateWithTransition } from "./page-transition";
 
 // ── Subtle dark-theme gradients for project visuals ──────────────
 const PROJECT_GRADIENTS = [
@@ -57,8 +58,8 @@ export function populateProjects() {
         card.append(visual, title, desc, link);
 
         card.addEventListener("click", (e) => {
-            if (e.target.tagName === "A") return;
-            window.location.href = realm.path;
+            if (e.target.closest("a")) return;
+            navigateWithTransition(realm.path);
         });
 
         grid.appendChild(card);

@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { getProjectNeighbors, getProjectRealm } from "./data/project-realms";
 import { setupTextRipple } from "./text-ripple";
+import { setupPageTransitions, revealAfterTransition } from "./page-transition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -224,16 +225,6 @@ function setupPageAnimations(project) {
         }
       );
     });
-  } else if (project.theme === "signal") {
-    stackPills.forEach((pill, index) => {
-      gsap.to(pill, {
-        y: () => Math.sin(index * 0.6) * 9,
-        repeat: -1,
-        yoyo: true,
-        duration: 1.3 + (index % 3) * 0.2,
-        ease: "sine.inOut"
-      });
-    });
   } else if (project.theme === "citadel") {
     sections.forEach((section) => {
       gsap.fromTo(
@@ -253,6 +244,17 @@ function setupPageAnimations(project) {
       );
     });
   }
+
+  // Floating stack pills — applied to ALL projects
+  stackPills.forEach((pill, index) => {
+    gsap.to(pill, {
+      y: () => Math.sin(index * 0.6) * 9,
+      repeat: -1,
+      yoyo: true,
+      duration: 1.3 + (index % 3) * 0.2,
+      ease: "sine.inOut"
+    });
+  });
 }
 
 function createThemePrimitive(THREE, theme) {
@@ -656,7 +658,12 @@ async function boot() {
   initSmoothScroll();
   setupPageAnimations(project);
   setupTextRipple();
+  setupPageTransitions();
   ScrollTrigger.refresh();
+
+  // Reveal page now that content is populated (prevents FOUC)
+  document.body.style.opacity = "1";
+  revealAfterTransition();
 }
 
 boot();
