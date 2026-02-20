@@ -46,38 +46,39 @@ function setProjectContent(project) {
   // ── Body sections interleaved with media ──────────────────────
   const bodyContainer = document.getElementById("project-body-container");
   if (bodyContainer) {
-    // Build a pool of all media elements
-    const mediaPool = [];
-    if (project.assets) {
-      const { images, videos } = project.assets;
-      if (images) {
-        images.forEach((imgFile) => {
-          const wrapper = el("div", "media-item reveal");
-          const img = document.createElement("img");
-          img.src = `/assets/${project.id}/${imgFile}`;
-          img.alt = `${project.title} — ${imgFile}`;
-          img.loading = "lazy";
-          wrapper.appendChild(img);
-          mediaPool.push(wrapper);
-        });
-      }
-      if (videos) {
-        videos.forEach((vidFile) => {
-          const wrapper = el("div", "media-item media-video reveal");
-          const video = document.createElement("video");
-          video.src = `/assets/${project.id}/${vidFile}`;
-          video.controls = true;
-          video.preload = "metadata";
-          video.playsInline = true;
-          wrapper.appendChild(video);
-          mediaPool.push(wrapper);
-        });
-      }
-    }
-
-    let mediaIndex = 0;
     const bodies = project.bodies || [];
 
+    const createMediaElement = (filename) => {
+      const ext = filename.split(".").pop().toLowerCase();
+      const isVideo = ["mp4", "webm", "mov"].includes(ext);
+      const wrapper = el("div", isVideo ? "media-item media-video reveal" : "media-item reveal");
+      if (isVideo) {
+        const video = document.createElement("video");
+        video.src = `/assets/${project.id}/${filename}`;
+        video.controls = true;
+        video.preload = "metadata";
+        video.playsInline = true;
+        wrapper.appendChild(video);
+      } else {
+        const img = document.createElement("img");
+        img.src = `/assets/${project.id}/${filename}`;
+        img.alt = `${project.title} — ${filename}`;
+        img.loading = "lazy";
+        wrapper.appendChild(img);
+      }
+      return wrapper;
+    };
+
+    const unusedMediaPool = [];
+    if (project.assets) {
+      const allExplicit = new Set(bodies.flatMap((b) => b.assets || []));
+      const allMedia = [...(project.assets.images || []), ...(project.assets.videos || [])].filter(
+        (f) => !allExplicit.has(f)
+      );
+      allMedia.forEach((f) => unusedMediaPool.push(createMediaElement(f)));
+    }
+
+    let pIndex = 0;
     bodies.forEach((body) => {
       // Add body section
       const section = el("section", "project-section project-body-section");
@@ -86,19 +87,30 @@ function setProjectContent(project) {
       section.append(heading, paragraph);
       bodyContainer.appendChild(section);
 
-      // Insert a media item after this body section (if available)
-      if (mediaIndex < mediaPool.length) {
-        const mediaSection = el("div", "project-media-inline");
-        mediaSection.appendChild(mediaPool[mediaIndex++]);
+      const mediaSection = el("div", "project-media-inline");
+      let addedToSection = false;
+
+      // Insert requested assets inline
+      if (body.assets && body.assets.length > 0) {
+        body.assets.forEach((f) => {
+          mediaSection.appendChild(createMediaElement(f));
+          addedToSection = true;
+        });
+      } else if (pIndex < unusedMediaPool.length) {
+        mediaSection.appendChild(unusedMediaPool[pIndex++]);
+        addedToSection = true;
+      }
+
+      if (addedToSection) {
         bodyContainer.appendChild(mediaSection);
       }
     });
 
     // Append any remaining media items
-    if (mediaIndex < mediaPool.length) {
+    if (pIndex < unusedMediaPool.length) {
       const remaining = el("div", "project-media-inline project-media-remaining");
-      while (mediaIndex < mediaPool.length) {
-        remaining.appendChild(mediaPool[mediaIndex++]);
+      while (pIndex < unusedMediaPool.length) {
+        remaining.appendChild(unusedMediaPool[pIndex++]);
       }
       bodyContainer.appendChild(remaining);
     }
@@ -117,17 +129,23 @@ function setProjectContent(project) {
     section.appendChild(el("h2", "reveal", "Links"));
     const linksList = el("div", "project-links-list");
 
-    project.assets.links.forEach((url) => {
+    project.assets.links.forEach((linkStr) => {
       const a = document.createElement("a");
-      a.href = url;
       a.target = "_blank";
       a.rel = "noopener noreferrer";
       a.className = "project-ext-link reveal";
-      // Display a clean hostname
-      try {
-        a.textContent = new URL(url).hostname.replace("www.", "") + " →";
-      } catch {
-        a.textContent = url;
+
+      const match = linkStr.match(/^(.*?):\s*(https?:\/\/[^\s]+)$/);
+      if (match) {
+        a.href = match[2];
+        a.textContent = match[1].trim() + " →";
+      } else {
+        a.href = linkStr;
+        try {
+          a.textContent = new URL(linkStr).hostname.replace("www.", "") + " →";
+        } catch {
+          a.textContent = linkStr;
+        }
       }
       linksList.appendChild(a);
     });

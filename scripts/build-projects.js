@@ -85,15 +85,17 @@ function parseTxtFile(filePath) {
         }
 
         // ── Body N: <Title: X> ───────────────────────────────────
-        const bodyMatch = line?.match(/^Body \d+:\s*<Title:\s*(.+?)>\s*$/i);
+        const bodyMatch = line?.match(/^Body \d+:\s*<Title:\s*([^>]+)>(?:\s*<Asset:\s*([^>]+)>)?\s*$/i);
         if (bodyMatch) {
             consume();
             const title = bodyMatch[1].trim();
+            const assetRaw = bodyMatch[2] ? bodyMatch[2].trim() : "";
+            const assets = assetRaw ? assetRaw.split(",").map((a) => a.trim()).filter(Boolean) : [];
             const bodyLines = [];
             while (peek() !== null && peek().trim() !== "" && !/^(Body \d|Tools used|Models|Links):/i.test(peek())) {
                 bodyLines.push(consume().trim());
             }
-            project.bodies.push({ title, content: bodyLines.join(" ") });
+            project.bodies.push({ title, content: bodyLines.join(" "), assets });
             continue;
         }
 

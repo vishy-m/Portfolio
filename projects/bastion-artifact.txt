@@ -13,7 +13,7 @@ Project Metrics:
  - Result:
 	Playable Build
 
-Body 1: <Title: Sprint Planning>
+Body 1: <Title: Sprint Planning> <Asset: S1.mp4, P1.png>
 Led sprint planning and system ownership across combat, inventory, and wave flows. Each two-week sprint delivered tested features that integrated cleanly with adjacent systems.
 
 Body 2: <Title: Cross-Discipline Coordination>

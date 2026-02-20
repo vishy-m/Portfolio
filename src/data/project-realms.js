@@ -4,8 +4,7 @@ export const projectRealmOrder = [
   "asl-translator",
   "bastion-artifact",
   "enemy-ai",
-  "finance-wizard",
-  "p1"
+  "finance-wizard"
 ];
 
 export const projectRealms = {
@@ -13,7 +12,7 @@ export const projectRealms = {
       "id": "asl-translator",
       "path": "/project-asl-translator.html",
       "title": "ASL Gesture Translator",
-      "subtitle": "A webcam-to-language pipeline that translates hand landmarks into alphabet and phrase predictions using an MLP model.",
+      "subtitle": "A computer vision project that detects your hand movements and signs for sign language.",
       "projectTag": "Project",
       "theme": "ledger",
       "modelPath": "",
@@ -30,16 +29,16 @@ export const projectRealms = {
       ],
       "metrics": [
           {
+              "label": "Purpose",
+              "value": "I mainly built this prokect to learn Computer Vision, AI, and MediaPipe"
+          },
+          {
               "label": "Accuracy",
               "value": "97%"
           },
           {
-              "label": "Rank",
-              "value": "Top 15"
-          },
-          {
-              "label": "Input",
-              "value": "Webcam Landmarks"
+              "label": "Data",
+              "value": "All data that was used to train the model was made by me and my team"
           }
       ],
       "chapters": [
@@ -50,15 +49,18 @@ export const projectRealms = {
       "bodies": [
           {
               "title": "Data Pipeline",
-              "content": "Built a robust data collection and cleaning pipeline from live camera landmarks. MediaPipe extracts 21 hand keypoints per frame, feeding into a normalization layer that handles varying hand sizes and positions."
+              "content": "Built a robust data collection and cleaning pipeline from live camera landmarks. MediaPipe extracts 21 hand keypoints per frame, feeding into a normalization layer that handles varying hand sizes and positions.",
+              "assets": []
           },
           {
               "title": "Model Training",
-              "content": "Trained and evaluated MLP variants for recognition confidence and latency tradeoffs. The final architecture balances real-time inference speed with high accuracy across 26 ASL alphabet signs."
+              "content": "Trained and evaluated MLP variants for recognition confidence and latency tradeoffs. The final architecture balances real-time inference speed with high accuracy across 26 ASL alphabet signs.",
+              "assets": []
           },
           {
               "title": "Interaction Design",
-              "content": "Packaged inference outputs into a practical interaction loop for communication support. The system provides visual feedback, confidence indicators, and word-building capabilities."
+              "content": "Packaged inference outputs into a practical interaction loop for communication support. The system provides visual feedback, confidence indicators, and word-building capabilities.",
+              "assets": []
           }
       ],
       "assets": {
@@ -108,21 +110,44 @@ export const projectRealms = {
       "bodies": [
           {
               "title": "Sprint Planning",
-              "content": "Led sprint planning and system ownership across combat, inventory, and wave flows. Each two-week sprint delivered tested features that integrated cleanly with adjacent systems."
+              "content": "Led sprint planning and system ownership across combat, inventory, and wave flows. Each two-week sprint delivered tested features that integrated cleanly with adjacent systems.",
+              "assets": [
+                  "S1.mp4",
+                  "P1.png"
+              ]
           },
           {
               "title": "Cross-Discipline Coordination",
-              "content": "Coordinated cross-discipline handoffs between gameplay engineers and content creators. Clear interface contracts and shared documentation kept the 10-person team aligned."
+              "content": "Coordinated cross-discipline handoffs between gameplay engineers and content creators. Clear interface contracts and shared documentation kept the 10-person team aligned.",
+              "assets": []
           },
           {
               "title": "Systems Integration",
-              "content": "Delivered cohesive core loops with scalable architecture for future expansion. Combat, AI, inventory, and wave progression interlock through event-driven communication."
+              "content": "Delivered cohesive core loops with scalable architecture for future expansion. Combat, AI, inventory, and wave progression interlock through event-driven communication.",
+              "assets": []
           }
       ],
       "assets": {
-          "images": [],
-          "videos": [],
-          "links": []
+          "images": [
+              "P1.png",
+              "P10.png",
+              "P11.png",
+              "P2.png",
+              "P3.png",
+              "P4.png",
+              "P5.png",
+              "P6.png",
+              "P7.png",
+              "P8.png",
+              "P9.png"
+          ],
+          "videos": [
+              "S1.mp4",
+              "S2.mp4"
+          ],
+          "links": [
+              "Final Presentation: https://docs.google.com/presentation/d/1MVdTFXHo2GmDAlAAh7JaIH0Dfsv5vooUbH1A2ZVxZos/edit?usp=sharing"
+          ]
       }
   },
   "enemy-ai": {
@@ -166,21 +191,35 @@ export const projectRealms = {
       "bodies": [
           {
               "title": "Sensory Architecture",
-              "content": "Modeled sensory channels for line-of-sight, aggression triggers, and retreat logic. Enemies perceive the environment through layered awareness systems that respond to sound, visibility, and threat proximity."
+              "content": "Modeled sensory channels for line-of-sight, aggression triggers, and retreat logic. Enemies perceive the environment through layered awareness systems that respond to sound, visibility, and threat proximity.",
+              "assets": []
           },
           {
               "title": "Behavior Tree Design",
-              "content": "Implemented behavior tree branches to make enemy intent more legible to players. Each decision node evaluates context — health, ammo, player distance — creating emergent tactical choices."
+              "content": "Implemented behavior tree branches to make enemy intent more legible to players. Each decision node evaluates context — health, ammo, player distance — creating emergent tactical choices.",
+              "assets": []
           },
           {
               "title": "Tuning & Balancing",
-              "content": "Tested tuning profiles for pacing, pressure curves, and difficulty fairness. Iterative playtesting sessions refined the balance between challenge and frustration."
+              "content": "Tested tuning profiles for pacing, pressure curves, and difficulty fairness. Iterative playtesting sessions refined the balance between challenge and frustration.",
+              "assets": []
           }
       ],
       "assets": {
-          "images": [],
-          "videos": [],
-          "links": []
+          "images": [
+              "P1.png",
+              "P2.png"
+          ],
+          "videos": [
+              "V1.mp4",
+              "V2.mp4",
+              "V3.mp4",
+              "V5.mp4",
+              "V6.mp4"
+          ],
+          "links": [
+              "Final Presentation: https://www.canva.com/design/DAGW284YVOo/m2Q0znQQiqcKEfzBOn6EiA/view?utm_content=DAGW284YVOo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h63607d6d57"
+          ]
       }
   },
   "finance-wizard": {
@@ -224,88 +263,23 @@ export const projectRealms = {
       "bodies": [
           {
               "title": "Visual Learning Modules",
-              "content": "Reframed financial education as short visual modules with reduced cognitive load. The app breaks down complex concepts like budgeting, saving, and investing into bite-sized interactive lessons that keep young learners engaged."
+              "content": "Reframed financial education as short visual modules with reduced cognitive load. The app breaks down complex concepts like budgeting, saving, and investing into bite-sized interactive lessons that keep young learners engaged.",
+              "assets": []
           },
           {
               "title": "Component Architecture",
-              "content": "Built reusable SwiftUI components for onboarding, progress, and scenario cards. Each component was designed to be composable and theme-aware, ensuring a consistent experience across different lesson types."
+              "content": "Built reusable SwiftUI components for onboarding, progress, and scenario cards. Each component was designed to be composable and theme-aware, ensuring a consistent experience across different lesson types.",
+              "assets": []
           },
           {
               "title": "Backend Integration",
-              "content": "Connected account flows and product iteration loops through Firebase-backed state. Real-time sync ensures progress is never lost, and analytics feed back into content decisions."
+              "content": "Connected account flows and product iteration loops through Firebase-backed state. Real-time sync ensures progress is never lost, and analytics feed back into content decisions.",
+              "assets": []
           }
       ],
       "assets": {
           "images": [],
           "videos": [],
-          "links": []
-      }
-  },
-  "p1": {
-      "id": "p1",
-      "path": "/project-p1.html",
-      "title": "Main Research thingy",
-      "subtitle": "A research thing that I worked on for a long time and did some shi",
-      "projectTag": "Project",
-      "theme": "ledger",
-      "modelPath": "",
-      "modelScale": 1,
-      "accent": "#c9a24b",
-      "secondary": "#35463f",
-      "impact": "",
-      "stack": [
-          "Unreal Engine",
-          "Git",
-          "KiCad",
-          "OpenCV",
-          "python",
-          "tensorflow1"
-      ],
-      "metrics": [
-          {
-              "label": "Purpose",
-              "value": "To allow for people to get research"
-          },
-          {
-              "label": "Impact",
-              "value": "Allowed the research o f...."
-          },
-          {
-              "label": "accomplishments",
-              "value": "Got published in this journal"
-          }
-      ],
-      "chapters": [
-          "I researched the use of meaning anf the lorem uadn kohas dkjuha skdh ais dhiadhs iuh adu haidhs iuahsdiuha dhu aisdhs iu…",
-          "kish isdh ishud fhsdkjf sdjh sdh fisd fidhs fijuhs dfkj hsdkh sddiufhisdhu iudh uhsdfhus jkhg ujkyg fuygzs jkuyfg zhugfj…",
-          "Gjug uywg  uhgsjhb jhas bdhua asw dhuy qw g jhug ygkuyaguwyg uygauygs djaysg djha gsdjhg as jhgasjhdgjahsgd jahgsdjahg s…"
-      ],
-      "bodies": [
-          {
-              "title": "Planning",
-              "content": "I researched the use of meaning anf the lorem uadn kohas dkjuha skdh ais dhiadhs iuh adu haidhs iuahsdiuha dhu aisdhs iuahs diuah sdhuasidhu aisdh iauhs iuah diu asihu aisdhu aisdhs iuahs iuaahs iu hsduh asidhu aisdh iasdh iaudhs iauhsdi hsdiuh shu asidhu asidhu aidh aiuhds aiu hs dk jhaSKJHNB jhb uykgA Uky gaUYG uyg UOYdgouyg uoyg uyo gaOuyg ouyg uyag uoyagags duygas douy gasgouy asdgy ajhsdg  ajmhsdjkyhag duyoga duy gasdguy asgy"
-          },
-          {
-              "title": "Research",
-              "content": "kish isdh ishud fhsdkjf sdjh sdh fisd fidhs fijuhs dfkj hsdkh sddiufhisdhu iudh uhsdfhus jkhg ujkyg fuygzs jkuyfg zhugfjhgskjhfg zkjhg uyg dsuygauyg auygfuyg dfjhg asdjhfgjhasdg fjhasg fjhags dfjhgauyefguygafuygkjhyagjhgajhsdg jhkag jhg ajhdfgjakhg fjhasgdfjhsgdfjhgasdfjhgasdjhfgasjdkhfg ajhdg j hsdfjyag fuygdjkhf axbchjhab djhbajkhcbuyabcuyhsbcjhbsjhkabsdjch basjhcbjahsbduyabsfuybeuybauyebwfhbwjfhbjahkbfwhjubfjhwbbefuya befuyuwyebfuyweb ufybw uybweu bwueybfuwyeb fuwybefuwyebfuywebfjuwybefjhwbefjhwbefjhwbe jhwbe fh bwjefhbwjbef jwhbef jhwbe fjhbbw ejfhb wjeefhjb wjhbe jhwbjbds jhb '"
-          },
-          {
-              "title": "Implementation",
-              "content": "Gjug uywg  uhgsjhb jhas bdhua asw dhuy qw g jhug ygkuyaguwyg uygauygs djaysg djha gsdjhg as jhgasjhdgjahsgd jahgsdjahg sjhgas asdasb dhajshydg ajsyg quy gwudyguwqygd ygwjysg jhg sdjhg jshhs gdjwhg sdhgwdsy wuswgdjhgjhgjhg hg kuyg kujyg jhg jhghgjhg jkhg ahgdfuygauy adgsy ukyaagsy dfhjasjdhbf jnsbdjhbasdfuyb hbajdhscjsahybdfjhybasdfuygsabdfyjahsbdfjhsabdfuyabg sdaduybcuyabdscuybasdcduyguyeawuygruygaejm gjhdb jhabdjhfg asjdhg fajshdg jkahsgd jhasgdfjhbsadcjhbascdhuybsudy fuaegsy fuygasehjgwgeuygweufygw bedfjhdgh jhwgdfuygwdufhgdjwghf jwhw wgeufygweuyfg ugy"
-          }
-      ],
-      "assets": {
-          "images": [
-              "P1.png",
-              "P2.png"
-          ],
-          "videos": [
-              "V1.mp4",
-              "V2.mp4",
-              "V3.mp4",
-              "V5.mp4",
-              "V6.mp4"
-          ],
           "links": []
       }
   }
