@@ -8,7 +8,7 @@
 import "./style.css";
 import "./lightweight.css";
 
-import { populateProjects, populateExperience, populateSkills, populateContact } from "./populate";
+import { populateProjects, populateAbout, populateSkills, populateContact } from "./populate";
 import { initSmoothScroll, setupRevealAnimations, setupScrollMarkers, ScrollTrigger } from "./animations";
 import { setupTextRipple } from "./text-ripple";
 import { setupCustomCursor, setupMagneticButtons } from "./cursor";
@@ -18,7 +18,7 @@ import { setupPageTransitions, revealAfterTransition } from "./page-transition";
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Populate data-driven DOM
   populateProjects();
-  populateExperience();
+  populateAbout();
   populateSkills();
   populateContact();
 

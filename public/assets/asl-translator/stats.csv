@@ -1,0 +1,5 @@
+Metric,Value
+Accuracy,97%
+FPS,60
+Latency,12ms
+Training Time,4h

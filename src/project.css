@@ -341,6 +341,11 @@ a {
   border: 1px solid var(--line-soft);
   overflow: hidden;
   background: rgba(10, 10, 10, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.media-item:hover {
+  transform: translateY(-4px);
 }
 
 .media-item img,
@@ -476,4 +481,97 @@ a {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ── Embedded CSV Table ─────────────────────────────────────── */
+.media-csv {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line-soft);
+  display: block !important;
+  /* Overrides flex etc */
+  grid-column: 1 / -1;
+  margin-top: 2rem;
+  padding: 1.5rem;
+}
+
+.csv-embed-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.csv-metadata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: inherit;
+  font-size: 0.8rem;
+  opacity: 0.6;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.csv-label {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--project-accent);
+}
+
+.csv-truncated-note {
+  font-style: italic;
+}
+
+.csv-table-scroll {
+  width: 100%;
+  max-height: 500px;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #020202;
+}
+
+.csv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.csv-table th {
+  position: sticky;
+  top: 0;
+  background: #111;
+  color: #fff;
+  text-align: left;
+  padding: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 10;
+}
+
+.csv-table td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  white-space: nowrap;
+}
+
+.csv-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+  color: #fff;
+}
+
+.csv-loading,
+.csv-error {
+  padding: 4rem 2rem;
+  text-align: center;
+  opacity: 0.5;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+}
+
+.csv-error {
+  color: #ff4444;
+  opacity: 1;
 }

@@ -27,3 +27,4 @@ UE5, C++, Blueprints, Behavior Trees, AI Agents
 
 Models:
 
+Thumbnail: P1.png

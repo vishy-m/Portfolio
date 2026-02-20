@@ -7,6 +7,7 @@
 
 import { resumeData } from "./data/resume";
 import { projectRealmOrder, projectRealms } from "./data/project-realms";
+import { aboutData } from "./data/about-data";
 import { navigateWithTransition } from "./page-transition";
 
 // ── Subtle dark-theme gradients for project visuals ──────────────
@@ -29,17 +30,26 @@ export function populateProjects() {
         const card = document.createElement("article");
         card.className = "lw-project-card lw-reveal";
 
-        // Visual circle
+        // Visual circle / Thumbnail
         const visual = document.createElement("div");
         visual.className = "lw-card-visual";
-        visual.style.background = PROJECT_GRADIENTS[i % PROJECT_GRADIENTS.length];
-        visual.style.border = "1px solid rgba(255,255,255,0.08)";
 
-        const number = document.createElement("span");
-        number.className = "lw-card-number";
-        number.textContent = String(i + 1).padStart(2, "0");
-        number.style.color = "rgba(255,255,255,0.06)";
-        visual.appendChild(number);
+        if (realm.thumbnail) {
+            const img = document.createElement("img");
+            img.src = `/assets/${realm.id}/${realm.thumbnail}`;
+            img.className = "lw-card-thumb";
+            img.alt = realm.title;
+            visual.appendChild(img);
+        } else {
+            visual.style.background = PROJECT_GRADIENTS[i % PROJECT_GRADIENTS.length];
+            visual.style.border = "1px solid rgba(255,255,255,0.08)";
+
+            const number = document.createElement("span");
+            number.className = "lw-card-number";
+            number.textContent = String(i + 1).padStart(2, "0");
+            number.style.color = "rgba(255,255,255,0.06)";
+            visual.appendChild(number);
+        }
 
         // Content
         const title = document.createElement("h3");
@@ -64,6 +74,33 @@ export function populateProjects() {
 
         grid.appendChild(card);
     });
+}
+
+// ── About ────────────────────────────────────────────────────────
+export function populateAbout() {
+    const bio = document.getElementById("about-bio");
+    if (bio && aboutData.bio) {
+        bio.textContent = aboutData.bio;
+    }
+
+    const container = document.querySelector("#about .lw-container > div");
+    if (container && aboutData.profileImage) {
+        // Add profile image if it doesn't exist
+        let img = container.querySelector(".lw-profile-img");
+        if (!img) {
+            img = document.createElement("img");
+            img.className = "lw-profile-img lw-reveal";
+            img.style.width = "120px";
+            img.style.height = "120px";
+            img.style.borderRadius = "50%";
+            img.style.objectFit = "cover";
+            img.style.marginBottom = "2rem";
+            img.style.display = "block";
+            img.style.border = "1px solid rgba(255,255,255,0.1)";
+            container.prepend(img);
+        }
+        img.src = `/assets/profile/${aboutData.profileImage}`;
+    }
 }
 
 // ── Experience ───────────────────────────────────────────────────
@@ -108,7 +145,9 @@ export function populateSkills() {
     const cloud = document.getElementById("skills-cloud");
     if (!cloud) return;
 
-    resumeData.skills.tools.forEach((tool) => {
+    const skills = aboutData.skills?.length > 0 ? aboutData.skills : resumeData.skills.tools;
+
+    skills.forEach((tool) => {
         const chip = document.createElement("span");
         chip.className = "lw-skill-chip";
         chip.textContent = tool;

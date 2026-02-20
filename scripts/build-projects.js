@@ -17,6 +17,8 @@ const ASSETS_DIR = join(ROOT, "assets");
 const PUBLIC_ASSETS = join(ROOT, "public", "assets");
 const TEMPLATE = join(ROOT, "project.html");
 const OUTPUT_DATA = join(ROOT, "src", "data", "project-realms.js");
+const ABOUT_DIR = join(ROOT, "about");
+const OUTPUT_ABOUT = join(ROOT, "src", "data", "about-data.js");
 
 // ── Default theme palette (cycles for each project) ──────────────
 const PALETTES = [
@@ -40,6 +42,7 @@ function parseTxtFile(filePath) {
         stack: [],
         modelPath: "",
         links: [],
+        thumbnail: "",
     };
 
     let i = 0;
@@ -113,9 +116,26 @@ function parseTxtFile(filePath) {
         if (/^Models:\s*$/i.test(line)) {
             consume();
             const modelLine = (peek() || "").trim();
-            if (modelLine && !/^(Title|Description|Project Metrics|Body \d|Tools used|Links):/i.test(modelLine)) {
+            if (modelLine && !/^(Title|Description|Project Metrics|Body \d|Tools used|Links|Thumbnail):/i.test(modelLine)) {
                 project.modelPath = consume().trim();
             }
+            continue;
+        }
+
+        // ── Thumbnail ────────────────────────────────────────────
+        const thumbMatch = line?.match(/^Thumbnail:\s*(.*)$/i);
+        if (thumbMatch) {
+            consume();
+            let val = thumbMatch[1].trim();
+            if (!val) {
+                val = (peek() || "").trim();
+                if (val && !/^(Title|Description|Project Metrics|Body \d|Tools used|Links|Models):/i.test(val)) {
+                    val = consume().trim();
+                } else {
+                    val = "";
+                }
+            }
+            project.thumbnail = val;
             continue;
         }
 
@@ -126,10 +146,46 @@ function parseTxtFile(filePath) {
     return project;
 }
 
+// ── Parse profile.txt ────────────────────────────────────────────
+function parseProfileFile(filePath) {
+    const raw = readFileSync(filePath, "utf-8");
+    const lines = raw.split("\n");
+    const data = { bio: "", skills: [], profileImage: "" };
+
+    let currentField = "";
+    for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        if (/^Bio:$/i.test(trimmed)) {
+            currentField = "bio";
+            continue;
+        }
+        if (/^Skills:$/i.test(trimmed)) {
+            currentField = "skills";
+            continue;
+        }
+        if (/^ProfileImage:$/i.test(trimmed)) {
+            currentField = "profileImage";
+            continue;
+        }
+
+        if (currentField === "bio") {
+            data.bio += (data.bio ? " " : "") + trimmed;
+        } else if (currentField === "skills") {
+            const split = trimmed.split(",").map((s) => s.trim()).filter(Boolean);
+            data.skills.push(...split);
+        } else if (currentField === "profileImage") {
+            data.profileImage = trimmed;
+        }
+    }
+    return data;
+}
+
 // ── Collect assets from assets/<id>/ ─────────────────────────────
 function collectAssets(projectId) {
     const assetsPath = join(ASSETS_DIR, projectId);
-    const result = { images: [], videos: [], links: [] };
+    const result = { images: [], videos: [], documents: [], links: [] };
 
     if (!existsSync(assetsPath)) return result;
 
@@ -143,12 +199,15 @@ function collectAssets(projectId) {
             result.images.push(file);
         } else if ([".mp4", ".webm", ".mov"].includes(ext)) {
             result.videos.push(file);
+        } else if ([".csv"].includes(ext)) {
+            result.documents.push(file);
         }
     }
 
     // Sort for deterministic output
     result.images.sort();
     result.videos.sort();
+    result.documents.sort();
 
     return result;
 }
@@ -225,9 +284,36 @@ function main() {
         process.exit(1);
     }
 
-    const txtFiles = readdirSync(PROJECTS_DIR)
-        .filter((f) => extname(f) === ".txt")
+    const allTxtFiles = readdirSync(PROJECTS_DIR)
+        .filter((f) => extname(f) === ".txt" && f !== "order.txt")
         .sort();
+
+    // ── Apply custom ordering if order.txt exists ──────────────────
+    const orderPath = join(PROJECTS_DIR, "order.txt");
+    let txtFiles = allTxtFiles;
+
+    if (existsSync(orderPath)) {
+        const orderList = readFileSync(orderPath, "utf-8")
+            .split("\n")
+            .map(l => l.trim())
+            .filter(Boolean);
+
+        txtFiles = allTxtFiles.sort((a, b) => {
+            const idA = basename(a, ".txt");
+            const idB = basename(b, ".txt");
+            const idxA = orderList.indexOf(idA);
+            const idxB = orderList.indexOf(idB);
+
+            // If both in list, use list order
+            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+            // If only A in list, A comes first
+            if (idxA !== -1) return -1;
+            // If only B in list, B comes first
+            if (idxB !== -1) return 1;
+            // Otherwise alphabetical
+            return idA.localeCompare(idB);
+        });
+    }
 
     if (txtFiles.length === 0) {
         console.warn("⚠️  No .txt files found in projects/. Generating empty project-realms.js.");
@@ -258,6 +344,7 @@ function main() {
             metrics: parsed.metrics,
             chapters: parsed.bodies.map((b) => b.content.slice(0, 120) + (b.content.length > 120 ? "…" : "")),
             bodies: parsed.bodies,
+            thumbnail: parsed.thumbnail || "",
             assets,
         };
 
@@ -276,6 +363,27 @@ function main() {
     const module = generateRealmsModule(projects);
     writeFileSync(OUTPUT_DATA, module);
     console.log(`  ✓ src/data/project-realms.js (${projects.length} projects)`);
+
+    // ── Handle About Section ─────────────────────────────────────
+    const profileTxt = join(ABOUT_DIR, "profile.txt");
+    if (existsSync(profileTxt)) {
+        const aboutData = parseProfileFile(profileTxt);
+        const aboutModule = `// AUTO-GENERATED by scripts/build-projects.js — do not edit manually.
+export const aboutData = ${JSON.stringify(aboutData, null, 4)};
+`;
+        writeFileSync(OUTPUT_ABOUT, aboutModule);
+        console.log(`  ✓ src/data/about-data.js`);
+
+        // Copy profile image if it exists in about/
+        if (aboutData.profileImage) {
+            const srcImg = join(ABOUT_DIR, aboutData.profileImage);
+            const destImgDir = join(PUBLIC_ASSETS, "profile");
+            if (existsSync(srcImg)) {
+                if (!existsSync(destImgDir)) mkdirSync(destImgDir, { recursive: true });
+                copyFileSync(srcImg, join(destImgDir, aboutData.profileImage));
+            }
+        }
+    }
 
     console.log(`\n✅  Built ${projects.length} project(s) successfully.`);
 }

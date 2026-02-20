@@ -1,0 +1,8 @@
+Bio:
+Building at the intersection of AI and interactive systems. I focus on usable products, measurable performance, and strong team execution.
+
+Skills:
+Java, Python, Swift, C++, UE5, UE4, React, Firebase, Git, Pandas, TensorFlow, Node.js, Xcode, VS Code
+
+ProfileImage:
+vishy.png

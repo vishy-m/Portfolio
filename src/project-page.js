@@ -51,7 +51,10 @@ function setProjectContent(project) {
     const createMediaElement = (filename) => {
       const ext = filename.split(".").pop().toLowerCase();
       const isVideo = ["mp4", "webm", "mov"].includes(ext);
+      const isCsv = ext === "csv";
+
       const wrapper = el("div", isVideo ? "media-item media-video reveal" : "media-item reveal");
+
       if (isVideo) {
         const video = document.createElement("video");
         video.src = `/assets/${project.id}/${filename}`;
@@ -59,6 +62,11 @@ function setProjectContent(project) {
         video.preload = "metadata";
         video.playsInline = true;
         wrapper.appendChild(video);
+      } else if (isCsv) {
+        wrapper.classList.add("media-csv");
+        const container = el("div", "csv-embed-container");
+        wrapper.appendChild(container);
+        renderCsvInline(`/assets/${project.id}/${filename}`, filename, container);
       } else {
         const img = document.createElement("img");
         img.src = `/assets/${project.id}/${filename}`;
@@ -72,9 +80,12 @@ function setProjectContent(project) {
     const unusedMediaPool = [];
     if (project.assets) {
       const allExplicit = new Set(bodies.flatMap((b) => b.assets || []));
-      const allMedia = [...(project.assets.images || []), ...(project.assets.videos || [])].filter(
-        (f) => !allExplicit.has(f)
-      );
+      const allMedia = [
+        ...(project.assets.images || []),
+        ...(project.assets.videos || []),
+        ...(project.assets.documents || [])
+      ].filter((f) => !allExplicit.has(f));
+
       allMedia.forEach((f) => unusedMediaPool.push(createMediaElement(f)));
     }
 
@@ -170,6 +181,72 @@ function setProjectContent(project) {
   jumpLink.href = "/index.html#projects";
 
   homeLink.href = "/index.html#projects";
+}
+
+// ── Inline CSV Renderer ───────────────────────────────────────
+async function renderCsvInline(url, filename, container) {
+  container.innerHTML = `<div class="csv-loading">Loading data...</div>`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("File not found");
+    const text = await response.text();
+    const allRows = text.split("\n")
+      .map(r => r.split(",").map(c => c.trim()))
+      .filter(r => r.length > 1 || (r.length === 1 && r[0] !== ""));
+
+    if (allRows.length === 0) {
+      container.innerHTML = `<div class="csv-error">No data in ${filename}</div>`;
+      return;
+    }
+
+    const MAX_ROWS = 35;
+    const isTruncated = allRows.length > MAX_ROWS + 1; // +1 for header
+    const rows = allRows.slice(0, MAX_ROWS + 1);
+
+    const tableWrapper = el("div", "csv-table-scroll");
+    tableWrapper.setAttribute("data-lenis-prevent", "");
+    const table = document.createElement("table");
+    table.className = "csv-table";
+
+    // Header
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    rows[0].forEach(cell => {
+      const th = document.createElement("th");
+      th.textContent = cell;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Body
+    const tbody = document.createElement("tbody");
+    rows.slice(1).forEach(rowData => {
+      const tr = document.createElement("tr");
+      rowData.forEach(cell => {
+        const td = document.createElement("td");
+        td.textContent = cell;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    tableWrapper.appendChild(table);
+
+    container.innerHTML = "";
+    if (filename) {
+      const meta = el("div", "csv-metadata");
+      meta.innerHTML = `<span class="csv-label">Data Source: ${filename}</span>`;
+      if (isTruncated) {
+        meta.innerHTML += ` <span class="csv-truncated-note">(Showing first ${MAX_ROWS} rows)</span>`;
+      }
+      container.appendChild(meta);
+    }
+    container.appendChild(tableWrapper);
+  } catch (err) {
+    container.innerHTML = `<div class="csv-error">Failed to load CSV: ${err.message}</div>`;
+  }
 }
 
 function initSmoothScroll() {

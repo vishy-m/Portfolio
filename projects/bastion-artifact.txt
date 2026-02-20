@@ -27,3 +27,4 @@ Unreal Engine, C++, Agile, Gameplay Systems, Enemy AI
 
 Models:
 
+Thumbnail: P1.png

@@ -16,15 +16,16 @@ import { prefersReducedMotion, finePointer } from "./config";
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&@!?+=";
 
 // ── Tuning Constants ─────────────────────────────────────────────
-const WAVE_MIN_CHARS = 12;        // chars affected for largest text (~100px+)
-const WAVE_MAX_CHARS = 50;        // chars affected for smallest text (~14px)
-const WAVE_REFERENCE_SIZE = 16;   // font-size that maps to WAVE_MAX_CHARS
-const WAVE_LARGE_SIZE = 80;       // font-size that maps to WAVE_MIN_CHARS
+const WAVE_MIN_CHARS = 10;        // ripple size for large text
+const WAVE_MAX_CHARS = 40;        // ripple size for small text
+const WAVE_REFERENCE_SIZE = 16;
+const WAVE_LARGE_SIZE = 80;
 
-const SCRAMBLE_DURATION = 160;    // ms — how long a char stays scrambled
-const DELAY_PER_RANK = 12;        // ms stagger between successive chars
-const MOVE_THRESHOLD = 70;        // px cursor must travel to fire a wave
-const GLOW_LINGER = 1200;         // ms — gray afterglow fade duration
+const ACTIVATION_RADIUS = 45;     // px — how close cursor must be to text to start
+const SCRAMBLE_DURATION = 140;    // ms
+const DELAY_PER_RANK = 8;         // ms
+const MOVE_THRESHOLD = 50;        // px — more sensitive movement
+const GLOW_LINGER = 600;          // ms
 
 // ── Colour Palette ───────────────────────────────────────────────
 const COLOR_SCRAMBLE = "rgba(120, 180, 255, 1)";
@@ -185,7 +186,7 @@ function scrambleChar(c, delay) {
 
 function triggerWave(chars, x, y) {
     const probe = getNearest(chars, x, y, 1);
-    if (!probe.length) return;
+    if (!probe.length || probe[0].dist > ACTIVATION_RADIUS) return;
 
     const waveCount = getWaveCount(probe[0].c.fontSize);
     const nearest = getNearest(chars, x, y, waveCount);
@@ -211,7 +212,15 @@ function startAmbientGlow(chars, getMouse) {
         }
 
         const probe = getNearest(chars, x, y, 1);
-        const fontSize = probe.length ? probe[0].c.fontSize : 16;
+        if (!probe.length || probe[0].dist > ACTIVATION_RADIUS * 1.5) {
+            for (let i = 0; i < chars.length; i++) {
+                chars[i].el.style.textShadow = "";
+            }
+            requestAnimationFrame(loop);
+            return;
+        }
+
+        const fontSize = probe[0].c.fontSize;
         const glowCount = Math.round(getWaveCount(fontSize) * 1.5);
         const glowChars = getNearest(chars, x, y, glowCount);
         const glowSet = new Set(glowChars.map((g) => g.c));
@@ -224,8 +233,8 @@ function startAmbientGlow(chars, getMouse) {
 
             if (glowSet.has(c)) {
                 const rank = glowChars.findIndex((g) => g.c === c);
-                const alpha = ((1 - rank / glowCount) * 0.3).toFixed(2);
-                c.el.style.textShadow = `0 0 8px rgba(220, 230, 255, ${alpha})`;
+                const alpha = ((1 - rank / glowCount) * 0.35).toFixed(2);
+                c.el.style.textShadow = `0 0 10px rgba(220, 230, 255, ${alpha})`;
             } else {
                 c.el.style.textShadow = "";
             }
