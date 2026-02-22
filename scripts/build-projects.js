@@ -93,12 +93,33 @@ function parseTxtFile(filePath) {
             consume();
             const title = bodyMatch[1].trim();
             const assetRaw = bodyMatch[2] ? bodyMatch[2].trim() : "";
-            const assets = assetRaw ? assetRaw.split(",").map((a) => a.trim()).filter(Boolean) : [];
+            let assets = [];
+            let layout = "bottom";
+            let autoplay = false;
+
+            if (assetRaw) {
+                const parts = assetRaw.split(",").map((p) => p.trim());
+                assets = parts.filter((p) =>
+                    !p.toLowerCase().startsWith("layout:") &&
+                    !p.toLowerCase().startsWith("autoplay:")
+                );
+
+                const layoutPart = parts.find((p) => p.toLowerCase().startsWith("layout:"));
+                if (layoutPart) {
+                    layout = layoutPart.split(":")[1].trim().toLowerCase();
+                }
+
+                const autoplayPart = parts.find((p) => p.toLowerCase().startsWith("autoplay:"));
+                if (autoplayPart) {
+                    autoplay = autoplayPart.split(":")[1].trim().toLowerCase() === "true";
+                }
+            }
+
             const bodyLines = [];
             while (peek() !== null && peek().trim() !== "" && !/^(Body \d|Tools used|Models|Links):/i.test(peek())) {
                 bodyLines.push(consume().trim());
             }
-            project.bodies.push({ title, content: bodyLines.join(" "), assets });
+            project.bodies.push({ title, content: bodyLines.join(" "), assets, layout, autoplay });
             continue;
         }
 

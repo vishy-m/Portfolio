@@ -48,7 +48,7 @@ function setProjectContent(project) {
   if (bodyContainer) {
     const bodies = project.bodies || [];
 
-    const createMediaElement = (filename) => {
+    const createMediaElement = (filename, autoplay = false) => {
       const ext = filename.split(".").pop().toLowerCase();
       const isVideo = ["mp4", "webm", "mov"].includes(ext);
       const isCsv = ext === "csv";
@@ -58,9 +58,17 @@ function setProjectContent(project) {
       if (isVideo) {
         const video = document.createElement("video");
         video.src = `/assets/${project.id}/${filename}`;
-        video.controls = true;
-        video.preload = "metadata";
         video.playsInline = true;
+
+        if (autoplay) {
+          video.autoplay = true;
+          video.loop = true;
+          video.muted = true;
+        } else {
+          video.controls = true;
+          video.preload = "metadata";
+        }
+
         wrapper.appendChild(video);
       } else if (isCsv) {
         wrapper.classList.add("media-csv");
@@ -77,54 +85,42 @@ function setProjectContent(project) {
       return wrapper;
     };
 
-    const unusedMediaPool = [];
-    if (project.assets) {
-      const allExplicit = new Set(bodies.flatMap((b) => b.assets || []));
-      const allMedia = [
-        ...(project.assets.images || []),
-        ...(project.assets.videos || []),
-        ...(project.assets.documents || [])
-      ].filter((f) => !allExplicit.has(f));
-
-      allMedia.forEach((f) => unusedMediaPool.push(createMediaElement(f)));
-    }
-
-    let pIndex = 0;
     bodies.forEach((body) => {
-      // Add body section
-      const section = el("section", "project-section project-body-section");
+      const layout = body.layout || "bottom";
+      const section = el("section", `project-section project-body-section layout-${layout}`);
+      const contentWrapper = el("div", "section-content-wrapper");
+
       const heading = el("h2", "reveal", body.title);
       const paragraph = el("p", "project-body-text reveal", body.content);
-      section.append(heading, paragraph);
-      bodyContainer.appendChild(section);
+      contentWrapper.append(heading, paragraph);
 
       const mediaSection = el("div", "project-media-inline");
-      let addedToSection = false;
+      let addedMedia = false;
 
       // Insert requested assets inline
       if (body.assets && body.assets.length > 0) {
         body.assets.forEach((f) => {
-          mediaSection.appendChild(createMediaElement(f));
-          addedToSection = true;
+          mediaSection.appendChild(createMediaElement(f, body.autoplay));
+          addedMedia = true;
         });
-      } else if (pIndex < unusedMediaPool.length) {
-        mediaSection.appendChild(unusedMediaPool[pIndex++]);
-        addedToSection = true;
       }
 
-      if (addedToSection) {
-        bodyContainer.appendChild(mediaSection);
+      if (layout === "top" && addedMedia) {
+        section.append(mediaSection, contentWrapper);
+      } else if (layout === "left" && addedMedia) {
+        section.classList.add("layout-horizontal");
+        section.append(mediaSection, contentWrapper);
+      } else if (layout === "right" && addedMedia) {
+        section.classList.add("layout-horizontal");
+        section.append(contentWrapper, mediaSection);
+      } else {
+        // Default: Bottom
+        section.append(contentWrapper);
+        if (addedMedia) section.appendChild(mediaSection);
       }
+
+      bodyContainer.appendChild(section);
     });
-
-    // Append any remaining media items
-    if (pIndex < unusedMediaPool.length) {
-      const remaining = el("div", "project-media-inline project-media-remaining");
-      while (pIndex < unusedMediaPool.length) {
-        remaining.appendChild(unusedMediaPool[pIndex++]);
-      }
-      bodyContainer.appendChild(remaining);
-    }
   }
 
   // ── Stack / Tools ────────────────────────────────────────────

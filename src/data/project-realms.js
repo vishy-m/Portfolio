@@ -53,17 +53,23 @@ export const projectRealms = {
               "assets": [
                   "S1.mp4",
                   "P1.png"
-              ]
+              ],
+              "layout": "bottom",
+              "autoplay": false
           },
           {
               "title": "Cross-Discipline Coordination",
               "content": "Coordinated cross-discipline handoffs between gameplay engineers and content creators. Clear interface contracts and shared documentation kept the 10-person team aligned.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           },
           {
               "title": "Systems Integration",
               "content": "Delivered cohesive core loops with scalable architecture for future expansion. Combat, AI, inventory, and wave progression interlock through event-driven communication.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           }
       ],
       "thumbnail": "P1.png",
@@ -133,17 +139,23 @@ export const projectRealms = {
           {
               "title": "Sensory Architecture",
               "content": "Modeled sensory channels for line-of-sight, aggression triggers, and retreat logic. Enemies perceive the environment through layered awareness systems that respond to sound, visibility, and threat proximity.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           },
           {
               "title": "Behavior Tree Design",
               "content": "Implemented behavior tree branches to make enemy intent more legible to players. Each decision node evaluates context — health, ammo, player distance — creating emergent tactical choices.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           },
           {
               "title": "Tuning & Balancing",
               "content": "Tested tuning profiles for pacing, pressure curves, and difficulty fairness. Iterative playtesting sessions refined the balance between challenge and frustration.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           }
       ],
       "thumbnail": "P1.png",
@@ -205,19 +217,27 @@ export const projectRealms = {
       ],
       "bodies": [
           {
-              "title": "Data Pipeline",
+              "title": "Planning",
               "content": "Built a robust data collection and cleaning pipeline from live camera landmarks. MediaPipe extracts 21 hand keypoints per frame, feeding into a normalization layer that handles varying hand sizes and positions.",
-              "assets": []
+              "assets": [
+                  "keypoint.csv"
+              ],
+              "layout": "left",
+              "autoplay": false
           },
           {
               "title": "Model Training",
               "content": "Trained and evaluated MLP variants for recognition confidence and latency tradeoffs. The final architecture balances real-time inference speed with high accuracy across 26 ASL alphabet signs.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           },
           {
               "title": "Interaction Design",
               "content": "Packaged inference outputs into a practical interaction loop for communication support. The system provides visual feedback, confidence indicators, and word-building capabilities.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           }
       ],
       "thumbnail": "",
@@ -272,17 +292,23 @@ export const projectRealms = {
           {
               "title": "Visual Learning Modules",
               "content": "Reframed financial education as short visual modules with reduced cognitive load. The app breaks down complex concepts like budgeting, saving, and investing into bite-sized interactive lessons that keep young learners engaged.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           },
           {
               "title": "Component Architecture",
               "content": "Built reusable SwiftUI components for onboarding, progress, and scenario cards. Each component was designed to be composable and theme-aware, ensuring a consistent experience across different lesson types.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           },
           {
               "title": "Backend Integration",
               "content": "Connected account flows and product iteration loops through Firebase-backed state. Real-time sync ensures progress is never lost, and analytics feed back into content decisions.",
-              "assets": []
+              "assets": [],
+              "layout": "bottom",
+              "autoplay": false
           }
       ],
       "thumbnail": "",
