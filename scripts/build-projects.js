@@ -395,9 +395,9 @@ export const aboutData = ${JSON.stringify(aboutData, null, 4)};
         writeFileSync(OUTPUT_ABOUT, aboutModule);
         console.log(`  ✓ src/data/about-data.js`);
 
-        // Copy profile image if it exists in about/
+        // Copy profile image if it exists in assets/profile/
         if (aboutData.profileImage) {
-            const srcImg = join(ABOUT_DIR, aboutData.profileImage);
+            const srcImg = join(ASSETS_DIR, "profile", aboutData.profileImage);
             const destImgDir = join(PUBLIC_ASSETS, "profile");
             if (existsSync(srcImg)) {
                 if (!existsSync(destImgDir)) mkdirSync(destImgDir, { recursive: true });
