@@ -15,7 +15,15 @@ readdirSync(__dirname)
     projectInputs[key] = resolve(__dirname, f);
   });
 
+// Determine base URL for GitHub Pages
+// GITHUB_REPOSITORY is automatically populated by Actions, e.g., "VishruthM/portfolio"
+const repo = process.env.GITHUB_REPOSITORY;
+// If repo exists and doesn't end in .github.io, we need a subpath base.
+const isUserSite = repo && repo.endsWith(".github.io");
+const matchedPath = repo && !isUserSite ? `/${repo.split("/")[1]}/` : "/";
+
 export default defineConfig({
+  base: matchedPath,
   build: {
     rollupOptions: {
       input: {

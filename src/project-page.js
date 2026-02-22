@@ -57,7 +57,7 @@ function setProjectContent(project) {
 
       if (isVideo) {
         const video = document.createElement("video");
-        video.src = `/assets/${project.id}/${filename}`;
+        video.src = `${import.meta.env.BASE_URL}assets/${project.id}/${filename}`;
         video.playsInline = true;
 
         if (autoplay) {
@@ -74,10 +74,10 @@ function setProjectContent(project) {
         wrapper.classList.add("media-csv");
         const container = el("div", "csv-embed-container");
         wrapper.appendChild(container);
-        renderCsvInline(`/assets/${project.id}/${filename}`, filename, container);
+        renderCsvInline(`${import.meta.env.BASE_URL}assets/${project.id}/${filename}`, filename, container);
       } else {
         const img = document.createElement("img");
-        img.src = `/assets/${project.id}/${filename}`;
+        img.src = `${import.meta.env.BASE_URL}assets/${project.id}/${filename}`;
         img.alt = `${project.title} — ${filename}`;
         img.loading = "lazy";
         wrapper.appendChild(img);
