@@ -168,15 +168,15 @@ function setProjectContent(project) {
   const jumpLink = document.getElementById("project-jump");
   const homeLink = document.querySelector(".project-back");
 
-  prevLink.href = previous.path;
+  prevLink.href = `${import.meta.env.BASE_URL}${previous.path}`;
   prevLink.querySelector("strong").textContent = previous.title;
 
-  nextLink.href = next.path;
+  nextLink.href = `${import.meta.env.BASE_URL}${next.path}`;
   nextLink.querySelector("strong").textContent = next.title;
 
-  jumpLink.href = "/index.html#projects";
+  jumpLink.href = `${import.meta.env.BASE_URL}index.html#projects`;
 
-  homeLink.href = "/index.html#projects";
+  homeLink.href = `${import.meta.env.BASE_URL}index.html#projects`;
 }
 
 // ── Inline CSV Renderer ───────────────────────────────────────

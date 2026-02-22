@@ -351,7 +351,7 @@ function main() {
 
         const project = {
             id,
-            path: `/project-${id}.html`,
+            path: `project-${id}.html`,
             title: parsed.title || id,
             subtitle: parsed.subtitle || "",
             projectTag: "Project",

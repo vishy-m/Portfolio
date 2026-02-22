@@ -10,7 +10,7 @@ export const projectRealmOrder = [
 export const projectRealms = {
   "bastion-artifact": {
       "id": "bastion-artifact",
-      "path": "/project-bastion-artifact.html",
+      "path": "project-bastion-artifact.html",
       "title": "Bastion of the Artifact",
       "subtitle": "A team-led Unreal prototype with combat, AI, wave systems, and inventory mechanics built under Agile delivery cycles.",
       "projectTag": "Project",
@@ -99,7 +99,7 @@ export const projectRealms = {
   },
   "enemy-ai": {
       "id": "enemy-ai",
-      "path": "/project-enemy-ai.html",
+      "path": "project-enemy-ai.html",
       "title": "Enemy AI Behavioral System",
       "subtitle": "A gameplay intelligence stack for Unreal Engine that combines sensory logic, behavior trees, and adaptive reaction loops.",
       "projectTag": "Project",
@@ -179,7 +179,7 @@ export const projectRealms = {
   },
   "asl-translator": {
       "id": "asl-translator",
-      "path": "/project-asl-translator.html",
+      "path": "project-asl-translator.html",
       "title": "ASL Gesture Translator",
       "subtitle": "A computer vision project that detects your hand movements and signs for sign language.",
       "projectTag": "Project",
@@ -252,7 +252,7 @@ export const projectRealms = {
   },
   "finance-wizard": {
       "id": "finance-wizard",
-      "path": "/project-finance-wizard.html",
+      "path": "project-finance-wizard.html",
       "title": "Finance Wizard Mobile Port",
       "subtitle": "A native iOS migration focused on making financial literacy feel accessible, visual, and actionable for K-12 learners.",
       "projectTag": "Project",

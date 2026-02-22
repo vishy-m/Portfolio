@@ -36,7 +36,7 @@ export function populateProjects() {
 
         if (realm.thumbnail) {
             const img = document.createElement("img");
-            img.src = `/assets/${realm.id}/${realm.thumbnail}`;
+            img.src = `${import.meta.env.BASE_URL}assets/${realm.id}/${realm.thumbnail}`;
             img.className = "lw-card-thumb";
             img.alt = realm.title;
             visual.appendChild(img);
@@ -69,7 +69,7 @@ export function populateProjects() {
 
         card.addEventListener("click", (e) => {
             if (e.target.closest("a")) return;
-            navigateWithTransition(realm.path);
+            navigateWithTransition(`${import.meta.env.BASE_URL}${realm.path}`);
         });
 
         grid.appendChild(card);
@@ -99,7 +99,7 @@ export function populateAbout() {
             img.style.border = "1px solid rgba(255,255,255,0.1)";
             container.prepend(img);
         }
-        img.src = `/assets/profile/${aboutData.profileImage}`;
+        img.src = `${import.meta.env.BASE_URL}assets/profile/${aboutData.profileImage}`;
     }
 }
 
