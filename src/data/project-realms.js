@@ -12,7 +12,7 @@ export const projectRealms = {
       "id": "bastion-artifact",
       "path": "project-bastion-artifact.html",
       "title": "Bastion of the Artifact",
-      "subtitle": "A team-led Unreal prototype with combat, AI, wave systems, and inventory mechanics built under Agile delivery cycles.",
+      "subtitle": "A tower defense third person video game developed by me and 10 other classmates. The game features enemies, advanced movement like sliding, weapon systems, extensive tower upgrading, and advanced building system",
       "projectTag": "Project",
       "theme": "ledger",
       "modelPath": "",
@@ -38,7 +38,7 @@ export const projectRealms = {
           },
           {
               "label": "Result",
-              "value": "Playable Build"
+              "value": "Placed 1st"
           }
       ],
       "chapters": [

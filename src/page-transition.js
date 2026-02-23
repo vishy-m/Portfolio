@@ -103,4 +103,17 @@ export function setupPageTransitions() {
         e.preventDefault();
         navigateWithTransition(href);
     });
+
+    // Reset overlay if page is restored from bfcache (browser back button)
+    window.addEventListener("pageshow", (e) => {
+        if (e.persisted) {
+            transitioning = false;
+            const overlay = document.getElementById("page-transition-overlay");
+            if (overlay) {
+                overlay.style.transition = "none";
+                overlay.style.opacity = "0";
+                overlay.style.pointerEvents = "none";
+            }
+        }
+    });
 }
