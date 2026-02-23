@@ -23,7 +23,7 @@ Body 3: <Title: Backend Integration>
 Connected account flows and product iteration loops through Firebase-backed state. Real-time sync ensures progress is never lost, and analytics feed back into content decisions.
 
 Tools used:
-Swift, SwiftUI, Firebase, Git, Xcode
+Swift, SwiftUI, Firebase, Git, Xcode, and much more
 
 Models:
 
