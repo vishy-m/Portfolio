@@ -2,7 +2,7 @@ Title:
 Bastion of the Artifact
 
 Description:
-A team-led Unreal prototype with combat, AI, wave systems, and inventory mechanics built under Agile delivery cycles.
+A tower defense third person video game developed by me and 10 other classmates. The game features enemies, advanced movement like sliding, weapon systems, extensive tower upgrading, and advanced building system
 
 Project Metrics:
 
@@ -11,7 +11,7 @@ Project Metrics:
  - Method:
 	Agile SDLC
  - Result:
-	Playable Build
+	Placed 1st
 
 Body 1: <Title: Sprint Planning> <Asset: S1.mp4, P1.png>
 Led sprint planning and system ownership across combat, inventory, and wave flows. Each two-week sprint delivered tested features that integrated cleanly with adjacent systems.
