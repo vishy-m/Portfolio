@@ -28,7 +28,8 @@ function el(tag, className, text) {
  */
 function parseLinksToNodes(text) {
   const frag = document.createDocumentFragment();
-  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  // Matches [Title](http://...) OR bare http://...
+  const urlRegex = /\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)|(https?:\/\/[^\s]+)/g;
 
   let lastIndex = 0;
   let match;
@@ -37,8 +38,13 @@ function parseLinksToNodes(text) {
     if (match.index > lastIndex) {
       frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
     }
-    const a = el("a", "inline-url-link reveal", match[0]);
-    a.href = match[0];
+
+    const isMarkdown = match[1] && match[2];
+    const title = isMarkdown ? match[1] : match[3];
+    const url = isMarkdown ? match[2] : match[3];
+
+    const a = el("a", "inline-url-link reveal", title);
+    a.href = url;
     a.target = "_blank";
     a.rel = "noopener noreferrer";
     frag.appendChild(a);
