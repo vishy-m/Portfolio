@@ -391,11 +391,25 @@ a {
 }
 
 .project-body-text {
-  margin: 0;
-  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
-  line-height: 1.8;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  line-height: 1.6;
   color: var(--ink-2);
-  opacity: 0.85;
+  margin: 0;
+  max-width: 65ch;
+}
+
+.inline-url-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 4px;
+  transition: all 0.2s ease;
+  word-break: break-all;
+}
+
+.inline-url-link:hover {
+  color: var(--project-accent);
+  text-decoration-color: var(--project-accent);
 }
 
 /* ====================================

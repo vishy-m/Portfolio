@@ -22,6 +22,36 @@ function el(tag, className, text) {
   return node;
 }
 
+/**
+ * Scans text for bare URLs (http:// or https://...) and returns a DocumentFragment
+ * where URLs are converted into proper target="_blank" anchor tags.
+ */
+function parseLinksToNodes(text) {
+  const frag = document.createDocumentFragment();
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  let lastIndex = 0;
+  let match;
+
+  while ((match = urlRegex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      frag.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+    }
+    const a = el("a", "inline-url-link reveal", match[0]);
+    a.href = match[0];
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    frag.appendChild(a);
+    lastIndex = urlRegex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+  }
+
+  return frag;
+}
+
 function setProjectContent(project) {
   document.title = `${project.title} | Vishruth Meda`;
   document.body.dataset.theme = project.theme;
@@ -91,7 +121,9 @@ function setProjectContent(project) {
       const contentWrapper = el("div", "section-content-wrapper");
 
       const heading = el("h2", "reveal", body.title);
-      const paragraph = el("p", "project-body-text reveal", body.content);
+      const paragraph = el("p", "project-body-text reveal");
+      paragraph.appendChild(parseLinksToNodes(body.content));
+
       contentWrapper.append(heading, paragraph);
 
       const mediaSection = el("div", "project-media-inline");

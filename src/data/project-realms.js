@@ -42,14 +42,14 @@ export const projectRealms = {
           }
       ],
       "chapters": [
-          "Led sprint planning and system ownership across combat, inventory, and wave flows. Each two-week sprint delivered tested…",
+          "We decided to organize the 10 people into two groups of 5. The two groups would have different roles. One group would be…",
           "Coordinated cross-discipline handoffs between gameplay engineers and content creators. Clear interface contracts and sha…",
           "Delivered cohesive core loops with scalable architecture for future expansion. Combat, AI, inventory, and wave progressi…"
       ],
       "bodies": [
           {
               "title": "Sprint Planning",
-              "content": "Led sprint planning and system ownership across combat, inventory, and wave flows. Each two-week sprint delivered tested features that integrated cleanly with adjacent systems.",
+              "content": "We decided to organize the 10 people into two groups of 5. The two groups would have different roles. One group would be in charge of models and animations, while the other team would be in charge of the actual coding mechanics and gameplay development. I was put on the development team as I had previous expereince working with and making video games. We initially had a big group meeting where we deiscussed multiple ideas based on the main theme of steampunk or medieval. Our group decided to go more with medieval and magic theme and we continued to discuss the exact details of the game. We soon came to the conclusion that we would make a tower defense game where the player could run around in third person and collect resources to build towers and upgrade them. Soon after, me and another teammate wuickly drafted a storyline for the game and basic thematic resources that we would base models, animations, and enemies after. We then got into more detailed explanations on the game mechanics, characters, enemies, and more gameplay mechanics that we would have. We put all of this informaiton and discussing into a one pager, ten pager, and a 50 pager. The 50 pager can be viewed here: https://docs.google.com/document/d/1hdWGzpMxa3WuxKq6qWogsNFJ3ueTIUBKpYNrbWRBzV8/edit?usp=sharing. Soon after, we directly got to work.",
               "assets": [
                   "S1.mp4",
                   "P1.png"
@@ -267,7 +267,8 @@ export const projectRealms = {
           "SwiftUI",
           "Firebase",
           "Git",
-          "Xcode"
+          "Xcode",
+          "and much more"
       ],
       "metrics": [
           {
