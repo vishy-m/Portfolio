@@ -399,17 +399,17 @@ a {
 }
 
 .inline-url-link {
-  color: inherit;
+  color: var(--project-accent);
   text-decoration: underline;
-  text-decoration-color: var(--line-strong);
+  text-decoration-color: var(--project-accent);
   text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
   transition: all 0.2s ease;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .inline-url-link:hover {
-  color: var(--project-accent);
-  text-decoration-color: var(--project-accent);
+  opacity: 0.8;
 }
 
 /* ====================================
