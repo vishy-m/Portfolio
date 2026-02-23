@@ -412,10 +412,6 @@ a {
   border-bottom-color: var(--project-accent);
 }
 
-.inline-url-link:hover {
-  opacity: 0.8;
-}
-
 /* ====================================
    Media Gallery
    ==================================== */
