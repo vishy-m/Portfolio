@@ -120,17 +120,19 @@ function splitElement(el, chars) {
  */
 function getNearest(chars, x, y, count) {
     const scored = [];
+    const topLimit = window.scrollY - 200;
+    const bottomLimit = window.scrollY + window.innerHeight + 200;
+
     for (let i = 0; i < chars.length; i++) {
         const c = chars[i];
-        const rect = c.el.getBoundingClientRect();
-        if (rect.bottom < -200 || rect.top > window.innerHeight + 200) continue;
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        scored.push({ c, dist: Math.hypot(x - cx, y - cy) });
+        if (c.pageY === undefined || c.pageY < topLimit || c.pageY > bottomLimit) continue;
+
+        scored.push({ c, dist: Math.hypot(x - c.pageX, y - c.pageY) });
     }
     scored.sort((a, b) => a.dist - b.dist);
     return scored.slice(0, count);
 }
+
 
 // ── Core Scramble Animation ──────────────────────────────────────
 
@@ -140,6 +142,9 @@ function getNearest(chars, x, y, count) {
  * the new one is truly ready — eliminating freeze gaps.
  */
 function scrambleChar(c, delay) {
+    if (c.isScrambling) return;
+    c.isScrambling = true;
+
     setTimeout(() => {
         const myId = ++c.scrambleId;
 
@@ -151,7 +156,10 @@ function scrambleChar(c, delay) {
         const interval = SCRAMBLE_DURATION / maxFlicks;
 
         const flicker = () => {
-            if (c.scrambleId !== myId) return;
+            if (c.scrambleId !== myId) {
+                c.isScrambling = false;
+                return;
+            }
 
             if (flicks < maxFlicks) {
                 c.el.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
@@ -160,6 +168,7 @@ function scrambleChar(c, delay) {
                 flicks++;
                 setTimeout(flicker, interval);
             } else {
+                c.isScrambling = false;
                 // Revert text → gray afterglow phase
                 c.el.textContent = c.original;
                 c.el.style.transition =
@@ -225,11 +234,12 @@ function startAmbientGlow(chars, getMouse) {
         const glowChars = getNearest(chars, x, y, glowCount);
         const glowSet = new Set(glowChars.map((g) => g.c));
 
+        const topLimit = window.scrollY - 200;
+        const bottomLimit = window.scrollY + window.innerHeight + 200;
+
         for (let i = 0; i < chars.length; i++) {
             const c = chars[i];
-            // Skip off-screen chars
-            const rect = c.el.getBoundingClientRect();
-            if (rect.bottom < -200 || rect.top > window.innerHeight + 200) continue;
+            if (c.pageY === undefined || c.pageY < topLimit || c.pageY > bottomLimit) continue;
 
             if (glowSet.has(c)) {
                 const rank = glowChars.findIndex((g) => g.c === c);
@@ -271,8 +281,8 @@ export function setupTextRipple() {
     let lastWaveY = -9999;
 
     document.addEventListener("pointermove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
+        mouseX = e.pageX;
+        mouseY = e.pageY;
 
         const dist = Math.hypot(mouseX - lastWaveX, mouseY - lastWaveY);
         if (dist > MOVE_THRESHOLD) {
@@ -288,4 +298,17 @@ export function setupTextRipple() {
 
     // Ambient glow
     startAmbientGlow(chars, () => ({ x: mouseX, y: mouseY }));
+
+    // Cache exact document positions of every character to prevent layout thrashing
+    const updateCache = () => {
+        for (const c of chars) {
+            const rect = c.el.getBoundingClientRect();
+            c.pageX = rect.left + window.scrollX + rect.width / 2;
+            c.pageY = rect.top + window.scrollY + rect.height / 2;
+        }
+    };
+
+    // Delay initial cache so rendering settles
+    setTimeout(updateCache, 200);
+    window.addEventListener("resize", updateCache);
 }
